@@ -30,17 +30,21 @@
     <div class="col-sm-4">
       <b>Organizator:</b>
       <br>
-      <a class="organizer" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
+      <a class="organizer" href="{% url 'user_page' action.organizer.pk %}"><img class="img-thumbnail" alt="{{ action.organizer.username }}" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
     </div>
     
     <div class="col-sm-6">
       <b>Udeleženci:</b>
       <br>
-      <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
+      {% for profile in action.profiles %}
+      {{ profile.user }}
+      <!-- <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
         <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
         <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
         <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
-        <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a>
+        <a class="attendee" href="#"><img class="img-thumbnail" alt="username" data-src="holder.js/200x200" style="width: 70px; height: 70px;"></img></a> -->
+
+      {% endfor %}
     </div>
   </div>
 </div>
