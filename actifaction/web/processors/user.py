@@ -3,7 +3,10 @@ from api.models import UserProfile
 
 
 def get_user(user_id):
-	return User.objects.get(pk=user_id)
+	try:
+		return User.objects.get(pk=user_id)
+	except User.DoesNotExist:
+		return None
 
 
 def get_user_profile(user_id):
@@ -28,7 +31,11 @@ def create_or_update_profile(user_id, **user_data):
 	if user_profile:
 		user_profile = user_profile[0]
 		user_profile.__dict__.update(user_data)
+		user_profile.user.__dict__.update(user_data)
+		print user_profile
+		user_profile.user.save()
 		user_profile.save()
+
 	else:
 		user_profile = UserProfile.objects.create(user=get_user(user_id), **user_data)
 

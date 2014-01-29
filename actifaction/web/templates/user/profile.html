@@ -7,10 +7,15 @@
 		<div class="jumbotron">
 			<a href="{% url 'edit_profile' user.pk %}">Edit</a>
 			<div class="media">
+				{% if user_profile %}
 				<a class="pull-left" href="#">
 					<img class="img-thumbnail" alt="{{ user.username }}" src="{{MEDIA_URL}}{{ user_profile.avatar }}" title="{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}" style="width: 100px; height: 100px;"/>
 				</a>
-
+				{% else %}
+					<a class="pull-left" href="#">
+						<img class="img-thumbnail" alt="{{ user.username }}" src="http://placekitten.com/g/100/100/" title="{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}" style="width: 100px; height: 100px;"/>
+					</a>
+				{% endif %}
 				<div class="media-body">
 					<h2 class="media-heading">
 						{% if user.first_name or user.last_name %}

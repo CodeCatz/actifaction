@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns(
 	'',
 	url(r'^accounts/login/$', 'django.contrib.auth.views.login',
-	    {'template_name': 'registration/login.html', 'authentication_form': LoginForm},
+	    {'template_name': 'user/login.html', 'authentication_form': LoginForm},
 	    name='login'),
 	url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
 	    {'next_page': '/'}, name='logout'),
@@ -34,3 +34,7 @@ urlpatterns += patterns(
     url(r'^accounts/user/(?P<user_id>\d+)/$', profile, name='profile'),
 )
 
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}))

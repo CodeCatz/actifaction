@@ -76,21 +76,30 @@ class UserCreateForm(UserCreationForm):
 
 
 class UserProfileForm(forms.Form):
-	"""email = forms.EmailField(
-		label = 'Email naslov',
-		required = True,
+	first_name = forms.CharField(
+		label='Ime',
+	    required=False,
+		max_length=255,
 		error_messages={
-			'required': 'Vnesite email naslov',
-			'invalid': 'Email naslov ni pravilen'
+			'invalid': 'Sorry, premalo prostora za tako dobro ime'
 		}
-	)"""
+	)
+
+	last_name = forms.CharField(
+		label='Priimek',
+	    required=False,
+		max_length=255,
+		error_messages={
+			'invalid': 'Sorry, premalo prostora za tako dobro ime'
+		}
+	)
 
 	user_bio = forms.CharField(
-		label = 'Bio',
-		max_length = 1024,
-		required = False,
-		widget = forms.Textarea,
-		)
+		label='Bio',
+		max_length=1024,
+		required=False,
+		widget=forms.Textarea,
+	)
 
 	avatar = forms.CharField(
 		label='Slika uporabnika',
@@ -109,7 +118,9 @@ class UserProfileForm(forms.Form):
 		self.helper.form_tag = True
 		self.helper.form_class = 'form-signin'
 		self.helper.add_layout(Layout(
-			Fieldset(_(u'Uporabniški profil'),
+			Fieldset(_('Uporabniski profil'),
+			         'first_name',
+			         'last_name',
 			         'user_bio',
 			         'avatar',
 			),

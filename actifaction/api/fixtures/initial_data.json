@@ -61,4 +61,11 @@
         "name": "Drugo",
         "slug": "drugo"
     }
+}, {
+    "pk": 1,
+    "model": "api.userprofile",
+    "fields": {
+        "user_bio": "Lorem ipsum",
+        "user": 1
+    }
 }]
