@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<div class="container">
+
+		<!-- Main component for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<a href="{% url 'edit_profile' user.pk %}">Edit</a>
+			<div class="media">
+				<a class="pull-left" href="#">
+					<img class="img-thumbnail" alt="{{ user.username }}" src="{{MEDIA_URL}}{{ user_profile.avatar }}" title="{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}" style="width: 100px; height: 100px;"/>
+				</a>
+
+				<div class="media-body">
+					<h2 class="media-heading">
+						{% if user.first_name or user.last_name %}
+							{{ user.first_name }} {{ user.last_name }}
+						{% else %}
+							{{ user.username }}
+						{% endif %}</h2>
+				</div>
+				<p>{{ user_profile.user_bio }}</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<ul class="nav nav-justified">
+			<li class="active"><a href="#">Moji dogodki</a></li>
+			<li><a href="#">Udeležiš se</a></li>
+			<li><a href="#">Pretekli dogodki</a></li>
+		</ul>
+	</div>
+	<div class="container">
+
+        {% for action in actions %}
+        <div class="col-md-4 aktivnost">
+
+        <h4><a href="{% url "web.view_action" action.id %}">{{action.title}}</a></h4>
+            <div class="ikona">
+
+            </div>
+            <div class="vsebina">
+                {{action.action_date}}
+                {{action.location}}
+                {{action.action_type}}
+            </div>
+
+            <div class="toolbar"><a class ="btn btn-default" href="/action/{{action.id}}/"> View Event</a>
+            </div>
+
+        </div>
+        {% endfor %}
+</div>
+
+
+{% endblock %}
