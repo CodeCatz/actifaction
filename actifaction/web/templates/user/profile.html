@@ -11,7 +11,7 @@
 			<div class="media">
 				{% if user_profile %}
 				<a class="pull-left" href="#">
-					<img class="img-thumbnail" alt="{{ user.username }}" src="{{MEDIA_URL}}{{ user_profile.avatar }}" title="{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}" style="width: 100px; height: 100px;"/>
+					<img class="img-thumbnail" alt="{{ user.username }}" src="{{ MEDIA_URL }}{{ user_profile.avatar }}" title="{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}" style="width: 100px; height: 100px;"/>
 				</a>
 				{% else %}
 					<a class="pull-left" href="#">

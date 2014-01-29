@@ -18,7 +18,7 @@ class ActionCategory(models.Model):
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, primary_key=True)
 	user_bio = models.TextField(max_length=1024)
-	avatar = models.ImageField(upload_to='media', default='http://placehold.it/30x30')
+	avatar = models.ImageField(upload_to='user_avatars', default='http://placehold.it/30x30')
 
 	def __unicode__(self):
 		return '%s' % self.user.email
