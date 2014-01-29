@@ -5,7 +5,9 @@
 
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
+		{% if request.user.pk == user.pk %}
 			<a href="{% url 'edit_profile' user.pk %}">Edit</a>
+		{% endif %}
 			<div class="media">
 				{% if user_profile %}
 				<a class="pull-left" href="#">
