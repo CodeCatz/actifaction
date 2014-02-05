@@ -32,16 +32,14 @@ def create_or_update_profile(user_id, **user_data):
 		user_profile = user_profile[0]
 		user_profile.__dict__.update(user_data)
 		user_profile.user.__dict__.update(user_data)
-		print user_profile
 		user_profile.user.save()
 		user_profile.save()
-
 	else:
 		current_user = get_user(user_id)
-        current_user.firstname=user_data['first_name']
-        current_user.lastname=user_data['last_name']
-        current_user.save()
-        user_profile = UserProfile.objects.create(user=get_user(user_id),
+		current_user.firstname=user_data['first_name']
+		current_user.lastname=user_data['last_name']
+		current_user.save()
+		user_profile = UserProfile.objects.create(user=get_user(user_id),
 		                                          user_bio=user_data['user_bio'],
 		                                          avatar=user_data['avatar']
 		                                          )
