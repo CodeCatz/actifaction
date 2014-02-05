@@ -43,8 +43,7 @@
       <b>Udeleženci:</b>
       <br>
       {% for profile in action.get_attendees_profiles %}
-      {{ profile.user.name }}
-      <a class="attendee" href="{% url 'profile' profile.pk %}"><img class="img-thumbnail" alt="{{ user.username }}" img src="{{MEDIA_URL}}{{ profile.avatar }}" title="{{ profile.user.first_name }} {{ profile.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
+      <a class="attendee" href="{% url 'profile' profile.pk %}"><img class="img-thumbnail" alt="{{ profile.user.username }}" img src="{{MEDIA_URL}}{{ profile.avatar }}" title="{{ profile.user.first_name }} {{ profile.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
 
       {% endfor %}
     </div>
