@@ -3,7 +3,7 @@
 <div class="jumbotron">
         
           {% if user.is_authenticated %}
-          <h1> Živjo, {{ user.username }} </h1>
+          <h1> Živjo, {{ user.first_name }} </h1>
           <br>
           <a class="btn btn-lg btn-primary" href="/actions" role="button">Kaj se dogaja? »</a>
         </p>

@@ -36,14 +36,14 @@
     <div class="col-sm-4">
       <b>Organizator:</b>
       <br>
-      <a class="organizer" href="{% url 'profile' action.organizer.pk %}"><img class="img-thumbnail" alt="{{ action.organizer.username }}" img src="{{MEDIA_URL}}{{ organizer.avatar }}" title="{{ organizer.user.first_name }} {{ organizer.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
+      <a class="organizer" href="{% url 'profile' action.organizer.pk %}"><img class="img-thumbnail" alt="{{ action.organizer.first_name }}" img src="{{MEDIA_URL}}{{ organizer.avatar }}" title="{{ organizer.user.first_name }} {{ organizer.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
     </div>
     
     <div class="col-sm-6">
       <b>Udeleženci:</b>
       <br>
       {% for profile in action.get_attendees_profiles %}
-      <a class="attendee" href="{% url 'profile' profile.pk %}"><img class="img-thumbnail" alt="{{ profile.user.username }}" img src="{{MEDIA_URL}}{{ profile.avatar }}" title="{{ profile.user.first_name }} {{ profile.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
+      <a class="attendee" href="{% url 'profile' profile.pk %}"><img class="img-thumbnail" alt="{{ profile.user.first_name }}" img src="{{MEDIA_URL}}{{ profile.avatar }}" title="{{ profile.user.first_name }} {{ profile.user.last_name }}" style="width: 70px; height: 70px;"></img></a>
 
       {% endfor %}
     </div>
