@@ -24,6 +24,12 @@
     <div class="col-sm-6">
       <form action ="input" action="#" method="post"><button class="btn btn-default" type="button"> Prijavi se </button></form>
     </div>
+
+    {% if logged_as == organizer.user.id %}
+        <div class="col-sm-6">
+            <a class ="btn btn-default" href="{% url 'web.edit_action' action.id %}"> Uredi</a>
+        </div>
+     {% endif %}
     </div>
 
       <div class="row" style="margin-top: 30px;">
