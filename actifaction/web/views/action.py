@@ -25,7 +25,7 @@ def index(request):
 	return render_to_response(
 		'pages/index.html',
 		context,
-        context_instance=RequestContext(request))
+		context_instance=RequestContext(request))
 
 
 @login_required
@@ -37,48 +37,58 @@ def view_all_actions(request):
 
 @login_required
 def add_action(request):
-    action_form = ActionForm()
-    if request.method =="POST":
-        action_form = ActionForm(data=request.POST)
-    if action_form.is_valid():
-        action_data = {"organizer_id" : request.user.id}
-        action_data.update(action_form.cleaned_data)
-        action = create_or_update_action(**action_data)
-        action_id = action.id
-        return HttpResponseRedirect(reverse('web.view_action', args=[action_id]))
-    context = {"form": action_form}
-    return render_to_response("pages/create_action.html", context, context_instance=RequestContext(request))
+	action_form = ActionForm()
+	if request.method =="POST":
+		action_form = ActionForm(data=request.POST)
+	if action_form.is_valid():
+		action_data = {"organizer_id" : request.user.id}
+		action_data.update(action_form.cleaned_data)
+		action = create_or_update_action(**action_data)
+		action_id = action.id
+		return HttpResponseRedirect(reverse('web.view_action', args=[action_id]))
+	context = {"form": action_form}
+	return render_to_response("pages/create_action.html", context, context_instance=RequestContext(request))
 
 @login_required
 def view_action(request, action_id):
 	action = get_object_or_404(Action, pk=action_id)
+	current_user = request.user.id
 	organizer = UserProfile.objects.get(user__pk=action.organizer.id)
-	context = {'action': action, 'organizer': organizer, 'logged_as' : request.user.id}
+	if action.attendees.filter(pk=current_user):
+		participating = True
+	else:
+		participating = False
+	if request.method == "POST":
+		# you can only join an event in you're not the organizer
+		if current_user != action.organizer.id and not participating:
+			action.attendees.add(current_user)
+			participating = True
+	context = {'action': action, 'organizer': organizer, 'logged_as' : request.user.id, 'participating' : participating}
 	return render_to_response("pages/view_action.html", context, context_instance=RequestContext(request))
 
 @login_required
 @permission_to_event
 def edit_action(request,action_id):
-    #check if a user is allowed to edit the event
-    action = get_action(action_id)
-    if request.user.id == action.organizer.id:
-        # Create a dictionary out of db data to populate the edit form
-        action_data = action.__dict__
+	#check if a user is allowed to edit the event
+	action = get_action(action_id)
+	if request.user.id == action.organizer.id:
+		# Create a dictionary out of db data to populate the edit form
+		action_data = action.__dict__
 
-        # Action_type key must have value of action_id to get
-        # SELECT element of the form to display the proper element
-        action_data['action_type'] = action.action_type_id
-        action_form = ActionForm(data=action_data)
-        if request.method == "POST":
-            action_form = ActionForm(data=request.POST)
-            if action_form.is_valid():
-                action_data = action_form.cleaned_data
-                action_data["action_type_id"]=action_data["action_type"].id
-                action = create_or_update_action(action_id,**action_data)
-                action_id = action.id
-                return HttpResponseRedirect(reverse('web.view_action', args=[action_id]))
-        context= {"form" : action_form}
-        return render_to_response("pages/create_action.html", context, context_instance=RequestContext(request))
+		# Action_type key must have value of action_id to get
+		# SELECT element of the form to display the proper element
+		action_data['action_type'] = action.action_type_id
+		action_form = ActionForm(data=action_data)
+		if request.method == "POST":
+			action_form = ActionForm(data=request.POST)
+			if action_form.is_valid():
+				action_data = action_form.cleaned_data
+				action_data["action_type_id"]=action_data["action_type"].id
+				action = create_or_update_action(action_id,**action_data)
+				action_id = action.id
+				return HttpResponseRedirect(reverse('web.view_action', args=[action_id]))
+		context= {"form" : action_form}
+		return render_to_response("pages/create_action.html", context, context_instance=RequestContext(request))
 
 
 @login_required
