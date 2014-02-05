@@ -21,10 +21,11 @@
     </div>
 </div>
     <div class="row">
+    {% if logged_as != organizer.user.id and not participating %}
     <div class="col-sm-6">
-      <form action ="input" action="#" method="post"><button class="btn btn-default" type="button"> Prijavi se </button></form>
+      <form name="signup" action="/action/join/{{action.id}}/" method="post">{% csrf_token %}<input class="btn btn-default" type="submit" value="Prijavi se"></form>
     </div>
-
+    {% endif %}
     {% if logged_as == organizer.user.id %}
         <div class="col-sm-6">
             <a class ="btn btn-default" href="{% url 'web.edit_action' action.id %}"> Uredi</a>
