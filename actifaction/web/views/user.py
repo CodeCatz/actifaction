@@ -32,6 +32,7 @@ def register_user(request):
 			                    password=request.POST['password1'])
 			if user is not None:
 				if user.is_active:
+					create_or_update_profile(user.id)
 					login(request, user)
 					return HttpResponseRedirect(reverse('profile', args=[user.pk]))
 

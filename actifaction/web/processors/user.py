@@ -26,8 +26,12 @@ def create_or_update_profile(user_id, **user_data):
 	"""
     Creates or updates UserProfile object according to existance of user
     """
-	user_profile = UserProfile.objects.filter(user__pk=user_id)
+	if not user_data:
+		user=get_user(user_id)
+		user_profile=UserProfile.objects.create(user=user)
+		return user_profile
 
+	user_profile = UserProfile.objects.filter(user__pk=user_id)
 	if user_profile:
 		user_profile = user_profile[0]
 		user_profile.__dict__.update(user_data)
